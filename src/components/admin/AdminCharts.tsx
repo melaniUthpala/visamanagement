@@ -21,7 +21,7 @@ export function ApplicationsByStatus({ data }: ApplicationsByStatusProps) {
       <CardContent>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
-            <Pie data={data} cx="50%" cy="50%" outerRadius={80} dataKey="count" label={({ status }) => status}>
+            <Pie data={data} cx="50%" cy="50%" outerRadius={80} dataKey="count" label={(entry) => entry.name}>
               {data.map((_, idx) => (
                 <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
               ))}
