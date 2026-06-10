@@ -4,7 +4,6 @@ import { useAuth } from "@/features/auth/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Sidebar } from "@/components/shared/Sidebar";
-import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { appUser, loading } = useAuth();
@@ -15,8 +14,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     if (!loading && appUser?.role === "admin") router.push("/admin");
   }, [appUser, loading, router]);
 
-  if (loading) return <LoadingSpinner className="min-h-screen" />;
-  if (!appUser) return null;
+  // loading වෙද්දී children show කරනවා — spinner නෑ
+  if (!appUser && !loading) return null;
 
   return (
     <div className="flex min-h-screen bg-background">
