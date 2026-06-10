@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/features/auth/AuthContext";
 import { getUserApplications } from "@/services/applications.service";
@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { CreditCard, CheckCircle, XCircle } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
-export default function PaymentsPage() {
+function PaymentsContent() {
   const { firebaseUser } = useAuth();
   const searchParams = useSearchParams();
 
@@ -34,11 +34,7 @@ export default function PaymentsPage() {
           return;
         }
 
-        console.log("Firebase User UID:", firebaseUser.uid);
-
         const apps = await getUserApplications(firebaseUser.uid);
-
-        console.log("Applications:", apps);
 
         if (!mounted) return;
 
@@ -48,46 +44,32 @@ export default function PaymentsPage() {
           return;
         }
 
-        const app = apps[0];
-
-        const paymentList = await getApplicationPayments(app.id);
-
-        console.log("Payments:", paymentList);
+        const paymentList = await getApplicationPayments(apps[0].id);
 
         if (!mounted) return;
 
         setPayments(paymentList || []);
       } catch (err) {
         console.error("Failed to fetch payments:", err);
-
-        if (mounted) {
-          setPayments([]);
-        }
+        if (mounted) setPayments([]);
       } finally {
-        if (mounted) {
-          setLoading(false);
-        }
+        if (mounted) setLoading(false);
       }
     };
 
     fetchPayments();
 
-    return () => {
-      mounted = false;
-    };
+    return () => { mounted = false; };
   }, [firebaseUser?.uid]);
 
   useEffect(() => {
     const updateStatus = async () => {
       if (success && paymentId) {
         try {
-          await updatePaymentStatus(paymentId, "completed");
-
+          await updatePaymentStatus(paymentId, "paid");
           setPayments((prev) =>
             prev.map((p) =>
-              p.id === paymentId
-                ? { ...p, status: "completed" }
-                : p
+              p.id === paymentId ? { ...p, status: "paid" } : p
             )
           );
         } catch (err) {
@@ -95,7 +77,6 @@ export default function PaymentsPage() {
         }
       }
     };
-
     updateStatus();
   }, [success, paymentId]);
 
@@ -103,27 +84,21 @@ export default function PaymentsPage() {
     try {
       setPayingId(payment.id);
 
-      const res = await fetch("/api/create-checkout-session", {
+      const res = await fetch("/api/stripe/create-checkout", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: Math.abs(payment.amount),
           paymentId: payment.id,
           applicationId: payment.applicationId,
+          type: payment.type,
         }),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to create Stripe session");
-      }
+      if (!res.ok) throw new Error("Failed to create Stripe session");
 
       const data = await res.json();
-
-      if (!data?.url) {
-        throw new Error("Stripe URL not returned");
-      }
+      if (!data?.url) throw new Error("Stripe URL not returned");
 
       window.location.href = data.url;
     } catch (err) {
@@ -134,17 +109,16 @@ export default function PaymentsPage() {
 
   if (loading) {
     return (
-      <div className="p-6">
-        Loading...
+      <div className="p-6 space-y-4">
+        <div className="h-8 w-32 bg-muted animate-pulse rounded" />
+        <div className="h-32 bg-muted animate-pulse rounded-xl" />
       </div>
     );
   }
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">
-        Payments
-      </h1>
+      <h1 className="text-2xl font-bold">Payments</h1>
 
       {success && (
         <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
@@ -175,14 +149,7 @@ export default function PaymentsPage() {
                   <CardTitle className="text-base capitalize">
                     {p.type} Fee
                   </CardTitle>
-
-                  <Badge
-                    variant={
-                      p.status === "completed"
-                        ? "default"
-                        : "secondary"
-                    }
-                  >
+                  <Badge variant={p.status === "paid" ? "default" : "secondary"}>
                     {p.status}
                   </Badge>
                 </div>
@@ -193,17 +160,14 @@ export default function PaymentsPage() {
                   {formatCurrency(Math.abs(p.amount))}
                 </span>
 
-                {p.status !== "completed" ? (
+                {p.status !== "paid" ? (
                   <Button
                     onClick={() => handlePay(p)}
                     disabled={payingId === p.id}
                     className="flex items-center gap-2"
                   >
                     <CreditCard className="h-4 w-4" />
-
-                    {payingId === p.id
-                      ? "Redirecting..."
-                      : "Pay Now"}
+                    {payingId === p.id ? "Redirecting..." : "Pay Now"}
                   </Button>
                 ) : (
                   <span className="text-green-600 flex items-center gap-1">
@@ -217,5 +181,18 @@ export default function PaymentsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function PaymentsPage() {
+  return (
+    <Suspense fallback={
+      <div className="p-6 space-y-4">
+        <div className="h-8 w-32 bg-muted animate-pulse rounded" />
+        <div className="h-32 bg-muted animate-pulse rounded-xl" />
+      </div>
+    }>
+      <PaymentsContent />
+    </Suspense>
   );
 }
