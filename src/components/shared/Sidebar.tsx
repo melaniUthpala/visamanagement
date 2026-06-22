@@ -7,10 +7,12 @@ import { logoutUser } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard, FileText, Upload, CreditCard, Calendar,
-  Users, Settings, LogOut, Globe2, Bell,
+  Users, Settings, LogOut, Globe2, Bell, Sun, Moon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
 
 const userNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -32,6 +34,10 @@ export function Sidebar() {
   const { appUser, isAdmin } = useAuth();
   const router = useRouter();
   const navItems = isAdmin ? adminNavItems : userNavItems;
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   const handleLogout = async () => {
     await logoutUser();
@@ -75,6 +81,17 @@ export function Sidebar() {
       </nav>
 
       <div className="p-4 border-t">
+        {mounted && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start gap-2 text-muted-foreground mb-2"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {theme === "dark" ? "Light Mode" : "Dark Mode"}
+          </Button>
+        )}
         <div className="flex items-center gap-3 px-3 py-2 mb-2">
           <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
             {appUser?.name?.[0]?.toUpperCase() || "U"}

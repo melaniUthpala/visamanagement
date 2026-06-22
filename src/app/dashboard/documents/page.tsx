@@ -2,10 +2,10 @@
 
 import { useAuth } from "@/features/auth/AuthContext";
 import { useUserApplications } from "@/hooks/useApplications";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase/config";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
 import { COLLECTIONS } from "@/lib/firebase/collections";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -29,6 +29,36 @@ export default function DocumentsPage() {
   const { applications, loading } = useUserApplications();
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
   const [uploaded, setUploaded] = useState<Record<string, boolean>>({});
+  const [checkingDocs, setCheckingDocs] = useState(true);
+
+  // Fetch existing documents on load
+  useEffect(() => {
+    const fetchExisting = async () => {
+      if (!applications[0]) {
+        setCheckingDocs(false);
+        return;
+      }
+      try {
+        const q = query(
+          collection(db, COLLECTIONS.DOCUMENTS),
+          where("applicationId", "==", applications[0].id)
+        );
+        const snap = await getDocs(q);
+        const existing: Record<string, boolean> = {};
+        snap.docs.forEach((d) => {
+          const data = d.data();
+          existing[data.type] = true;
+        });
+        setUploaded(existing);
+      } catch (err) {
+        console.error("Failed to fetch existing documents:", err);
+      } finally {
+        setCheckingDocs(false);
+      }
+    };
+
+    if (!loading) fetchExisting();
+  }, [applications, loading]);
 
   const handleUpload = useCallback(async (type: DocumentType, file: File) => {
     if (!appUser || !applications[0]) return;
@@ -60,7 +90,7 @@ export default function DocumentsPage() {
     );
   }, [appUser, applications]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading || checkingDocs) return <LoadingSpinner />;
 
   if (!applications[0]) {
     return (
