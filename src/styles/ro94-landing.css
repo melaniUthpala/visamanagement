@@ -1,0 +1,289 @@
+/* ============================================================
+   RO94 Landing Page Theme
+   Scoped under .ro94-landing so it NEVER overrides the
+   existing dashboard/admin ShadCN tokens defined in globals.css
+============================================================ */
+
+.ro94-landing {
+  --background: 220 30% 7%;
+  --foreground: 45 25% 95%;
+  --card: 220 28% 10%;
+  --card-foreground: 45 25% 95%;
+  --primary: 45 90% 55%;
+  --primary-foreground: 220 40% 8%;
+  --secondary: 220 25% 14%;
+  --secondary-foreground: 45 25% 95%;
+  --muted: 220 20% 16%;
+  --muted-foreground: 45 10% 70%;
+  --accent: 45 90% 55%;
+  --accent-foreground: 220 40% 8%;
+  --border: 220 20% 18%;
+  --input: 220 20% 18%;
+  --ring: 45 90% 55%;
+  --radius: 0.5rem;
+  --gold: 45 90% 55%;
+  --navy-deep: 220 40% 5%;
+  --gradient-gold: linear-gradient(135deg, hsl(45 95% 65%), hsl(40 85% 45%));
+  --gradient-hero: linear-gradient(135deg, hsl(220 40% 5% / 0.95), hsl(220 35% 8% / 0.7));
+  --shadow-gold: 0 10px 40px -10px hsl(45 90% 55% / 0.4);
+  --shadow-card: 0 8px 30px -8px hsl(220 50% 2% / 0.6);
+  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.ro94-landing.light {
+  --background: 210 40% 97%;
+  --foreground: 220 40% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 40% 10%;
+  --primary: 40 85% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 30% 92%;
+  --secondary-foreground: 220 40% 10%;
+  --muted: 210 30% 90%;
+  --muted-foreground: 220 20% 40%;
+  --accent: 40 85% 45%;
+  --accent-foreground: 0 0% 100%;
+  --border: 210 20% 82%;
+  --input: 210 20% 85%;
+  --ring: 40 85% 45%;
+  --navy-deep: 210 40% 94%;
+  --gradient-gold: linear-gradient(135deg, hsl(40 90% 50%), hsl(35 80% 38%));
+  --gradient-hero: linear-gradient(135deg, hsl(220 40% 5% / 0.8), hsl(220 35% 8% / 0.5));
+  --shadow-gold: 0 10px 40px -10px hsl(40 85% 45% / 0.35);
+  --shadow-card: 0 8px 30px -8px hsl(220 20% 60% / 0.2);
+}
+
+.ro94-landing * {
+  border-color: hsl(var(--border));
+}
+
+.ro94-landing h1,
+.ro94-landing h2,
+.ro94-landing h3,
+.ro94-landing h4 {
+  font-family: 'Playfair Display', serif;
+}
+
+.ro94-landing .text-gradient-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.ro94-landing .bg-gradient-gold { background: var(--gradient-gold); }
+.ro94-landing .bg-gradient-hero { background: var(--gradient-hero); }
+.ro94-landing .shadow-gold { box-shadow: var(--shadow-gold); }
+.ro94-landing .shadow-card { box-shadow: var(--shadow-card); }
+.ro94-landing .transition-smooth { transition: var(--transition-smooth); }
+
+.ro94-landing .btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+  background: var(--gradient-gold);
+  color: hsl(var(--primary-foreground));
+  box-shadow: var(--shadow-gold);
+}
+.ro94-landing .btn-gold:hover { opacity: 0.9; }
+
+.ro94-landing .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  border: 1px solid hsl(var(--primary) / 0.4);
+  transition: var(--transition-smooth);
+}
+.ro94-landing .btn-outline:hover { background: hsl(var(--primary) / 0.1); }
+
+.ro94-landing .card-base {
+  border-radius: 0.5rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card) / 0.85);
+  color: hsl(var(--card-foreground));
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.ro94-landing .input-base {
+  height: 2.5rem;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid hsl(var(--input));
+  background: hsl(var(--background));
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
+}
+.ro94-landing .input-base::placeholder { color: hsl(var(--muted-foreground)); }
+.ro94-landing .input-base:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--ring));
+}
+
+.ro94-landing .glass-card {
+  background: hsl(var(--card) / 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.ro94-landing .glass-nav {
+  background: hsl(var(--background) / 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@keyframes ro94-fade-up { from { opacity:0; transform: translateY(30px);} to {opacity:1; transform: translateY(0);} }
+.ro94-landing .animate-fade-up { animation: ro94-fade-up 0.8s ease-out forwards; }
+
+@keyframes ro94-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.ro94-landing .animate-float { animation: ro94-float 3s ease-in-out infinite; }
+
+/* Scroll reveal */
+.ro94-landing .sr {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ro94-landing .sr-left  { transform: translateX(-28px); }
+.ro94-landing .sr-right { transform: translateX(28px);  }
+.ro94-landing .sr-scale { transform: scale(0.92);       }
+.ro94-landing .sr-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.ro94-landing .will-change-transform { will-change: transform; }
+
+/* ============================================================
+   Hard overrides for Tailwind's generated color utilities.
+   visamanagement's Tailwind v4 theme uses oklch() colors for
+   bg-primary / bg-secondary / text-foreground etc (see globals.css).
+   RO94 needs its own gold/navy hsl() palette instead, so every
+   color utility actually used by the landing components is
+   re-pointed here, scoped to .ro94-landing, with !important so
+   it always wins regardless of CSS bundling order.
+============================================================ */
+.ro94-landing.ro94-landing { color: hsl(var(--foreground)); background-color: hsl(var(--background)); }
+
+.ro94-landing .bg-background\/50 { background-color: hsl(var(--background) / 0.5) !important; }
+.ro94-landing .bg-background\/60 { background-color: hsl(var(--background) / 0.6) !important; }
+.ro94-landing .bg-background\/95 { background-color: hsl(var(--background) / 0.95) !important; }
+.ro94-landing .bg-card { background-color: hsl(var(--card)) !important; }
+.ro94-landing .bg-primary\/10 { background-color: hsl(var(--primary) / 0.1) !important; }
+.ro94-landing .bg-primary\/90 { background-color: hsl(var(--primary) / 0.9) !important; }
+.ro94-landing .bg-secondary\/30 { background-color: hsl(var(--secondary) / 0.3) !important; }
+.ro94-landing .bg-secondary\/80 { background-color: hsl(var(--secondary) / 0.8) !important; }
+.ro94-landing .bg-white\/10 { background-color: rgb(255 255 255 / 0.1) !important; }
+.ro94-landing .hover\:bg-white\/10:hover { background-color: rgb(255 255 255 / 0.1) !important; }
+.ro94-landing .hover\:bg-white\/20:hover { background-color: rgb(255 255 255 / 0.2) !important; }
+
+.ro94-landing .border-border { border-color: hsl(var(--border)) !important; }
+.ro94-landing .border-primary\/20 { border-color: hsl(var(--primary) / 0.2) !important; }
+.ro94-landing .border-primary\/30 { border-color: hsl(var(--primary) / 0.3) !important; }
+.ro94-landing .border-primary\/40 { border-color: hsl(var(--primary) / 0.4) !important; }
+.ro94-landing .border-primary\/50 { border-color: hsl(var(--primary) / 0.5) !important; }
+.ro94-landing .hover\:border-primary\/40:hover { border-color: hsl(var(--primary) / 0.4) !important; }
+.ro94-landing .hover\:border-primary\/50:hover { border-color: hsl(var(--primary) / 0.5) !important; }
+
+.ro94-landing .text-foreground { color: hsl(var(--foreground)) !important; }
+.ro94-landing .text-foreground\/80 { color: hsl(var(--foreground) / 0.8) !important; }
+.ro94-landing .text-foreground\/90 { color: hsl(var(--foreground) / 0.9) !important; }
+.ro94-landing .text-muted-foreground { color: hsl(var(--muted-foreground)) !important; }
+.ro94-landing .text-primary { color: hsl(var(--primary)) !important; }
+.ro94-landing .text-primary\/60 { color: hsl(var(--primary) / 0.6) !important; }
+.ro94-landing .text-primary-foreground { color: hsl(var(--primary-foreground)) !important; }
+.ro94-landing .hover\:text-primary:hover { color: hsl(var(--primary)) !important; }
+.ro94-landing .group:hover .group-hover\:text-primary-foreground { color: hsl(var(--primary-foreground)) !important; }
+.ro94-landing .fill-primary { fill: hsl(var(--primary)) !important; }
+.ro94-landing .group:hover .group-hover\:bg-gradient-gold { background: var(--gradient-gold) !important; }
+
+.ro94-landing .from-background { --tw-gradient-from: hsl(var(--background)) var(--tw-gradient-from-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, hsl(var(--background) / 0)) !important; }
+.ro94-landing .from-card { --tw-gradient-from: hsl(var(--card)) var(--tw-gradient-from-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, hsl(var(--card) / 0)) !important; }
+.ro94-landing .via-background\/40 { --tw-gradient-via: hsl(var(--background) / 0.4) var(--tw-gradient-via-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to, hsl(var(--background) / 0)) !important; }
+.ro94-landing .via-card\/40 { --tw-gradient-via: hsl(var(--card) / 0.4) var(--tw-gradient-via-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to, hsl(var(--card) / 0)) !important; }
+.ro94-landing .via-primary\/40 { --tw-gradient-via: hsl(var(--primary) / 0.4) var(--tw-gradient-via-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to, hsl(var(--primary) / 0)) !important; }
+
+/* ShadCN form primitives used by the embedded RegisterForm/LoginForm */
+.ro94-landing .bg-primary { background-color: hsl(var(--primary)) !important; }
+.ro94-landing .hover\:bg-primary\/80:hover { background-color: hsl(var(--primary) / 0.8) !important; }
+.ro94-landing .text-card-foreground { color: hsl(var(--card-foreground)) !important; }
+.ro94-landing .border-input { border-color: hsl(var(--input)) !important; }
+.ro94-landing .bg-input\/30 { background-color: hsl(var(--input) / 0.3) !important; }
+.ro94-landing .ring-foreground\/10 { box-shadow: 0 0 0 1px hsl(var(--border)) !important; }
+.ro94-landing .focus-visible\:ring-ring\/50:focus-visible { box-shadow: 0 0 0 3px hsl(var(--ring) / 0.4) !important; }
+.ro94-landing .focus-visible\:border-ring:focus-visible { border-color: hsl(var(--ring)) !important; }
+
+/* ============================================================
+   Modern glass styling for the embedded auth forms
+   (RegisterForm / LoginForm) when placed inside the RO94
+   landing page. Wrap with <div className="ro94-auth-embed">.
+============================================================ */
+.ro94-landing .ro94-auth-embed [data-slot="card"] {
+  background: hsl(var(--card) / 0.6) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid hsl(var(--primary) / 0.25) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: var(--shadow-gold), 0 1px 0 hsl(var(--primary) / 0.15) inset !important;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+.ro94-landing .ro94-auth-embed [data-slot="card-title"] {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem !important;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.ro94-landing .ro94-auth-embed input {
+  height: 2.75rem !important;
+  border-radius: 0.625rem !important;
+  background: hsl(var(--background) / 0.5) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  transition: var(--transition-smooth);
+}
+.ro94-landing .ro94-auth-embed input:focus-visible {
+  border-color: hsl(var(--primary)) !important;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.18) !important;
+}
+.ro94-landing .ro94-auth-embed label {
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 0.25rem;
+  display: inline-block;
+}
+.ro94-landing .ro94-auth-embed button[type="submit"] {
+  background: var(--gradient-gold) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  height: 2.75rem !important;
+  border-radius: 0.625rem !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-gold);
+  transition: var(--transition-smooth);
+}
+.ro94-landing .ro94-auth-embed button[type="submit"]:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.ro94-landing .ro94-auth-embed button[type="submit"]:disabled {
+  opacity: 0.6;
+}

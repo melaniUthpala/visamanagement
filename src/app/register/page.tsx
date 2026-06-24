@@ -8,8 +8,8 @@ export default function RegisterPage() {
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 text-primary hover:opacity-80">
-            <Globe2 className="h-8 w-8" />
-            <span className="font-bold text-2xl">VisaTrack</span>
+            <img src="/landing/ro94-logo.png" alt="RO94" className="h-20 w-20 object-contain" />
+            <span className="font-bold text-2xl">RO94 Holdings</span>
           </Link>
         </div>
         <RegisterForm />
@@ -17,3 +17,7 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+
+
+

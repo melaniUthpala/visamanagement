@@ -290,7 +290,7 @@ function PaymentsContent() {
 
       <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/60 pt-2">
         <ShieldCheck className="h-3.5 w-3.5" />
-        All payments are processed securely by Stripe. VisaTrack does not store your card details.
+        All payments are processed securely by Stripe. RO94 Holdings does not store your card details.
       </div>
     </div>
   );

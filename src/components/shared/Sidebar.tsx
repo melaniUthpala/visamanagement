@@ -48,8 +48,8 @@ export function Sidebar() {
     <aside className="w-64 min-h-screen bg-card border-r flex flex-col">
       <div className="p-6 border-b">
         <div className="flex items-center gap-2">
-          <Globe2 className="h-6 w-6 text-primary" />
-          <span className="font-bold text-lg">VisaTrack</span>
+          <img src="/landing/ro94-logo.png" alt="RO94" className="h-14 w-14 object-contain" />
+          <span className="font-bold text-lg">RO94 Holdings</span>
         </div>
         {isAdmin && (
           <span className="mt-1 inline-block text-xs bg-primary/10 text-primary rounded-full px-2 py-0.5">
